@@ -1,0 +1,16 @@
+{
+    "name": "lemacarl/org.lemacarl.membershipperiod",
+    "description": "CiviCRM extension",
+    "type": "extension",
+    "require-dev": {
+        "phpunit/phpunit": ">=4.8.21",
+        "mockery/mockery": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "Lema Carl",
+            "email": "carlandrewlema@gmail.com"
+        }
+    ],
+    "require": {}
+}
