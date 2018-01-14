@@ -10,7 +10,10 @@ use CRM_Membershipperiod_ExtensionUtil as E;
  * @see http://wiki.civicrm.org/confluence/display/CRMDOC/API+Architecture+Standards
  */
 function _civicrm_api3_membership_period_create_spec(&$spec) {
-  // $spec['some_parameter']['api.required'] = 1;
+	$spec['membership_id']['api.required'] = 1;
+	$spec['contact_id']['api.required'] = 1;
+	$spec['start_date']['api.required'] = 1;
+	$spec['end_date']['api.required'] = 1;
 }
 
 /**
