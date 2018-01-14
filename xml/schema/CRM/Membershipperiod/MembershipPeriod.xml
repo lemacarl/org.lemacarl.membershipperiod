@@ -23,12 +23,28 @@
   <field>
     <name>membership_id</name>
     <type>int unsigned</type>
+    <required>true</required>
     <comment>FK to Membership</comment>
     <add>4.4</add>
   </field>
   <foreignKey>
     <name>membership_id</name>
     <table>civicrm_membership</table>
+    <key>id</key>
+    <add>4.4</add>
+    <onDelete>CASCADE</onDelete>
+  </foreignKey>
+
+  <field>
+    <name>contact_id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>FK to Contact</comment>
+    <add>4.4</add>
+  </field>
+  <foreignKey>
+    <name>contact_id</name>
+    <table>civicrm_contact</table>
     <key>id</key>
     <add>4.4</add>
     <onDelete>CASCADE</onDelete>
@@ -54,6 +70,7 @@
     <uniqueName>membership_start_date</uniqueName>
     <title>Membership Start Date</title>
     <type>date</type>
+    <required>true</required>
     <import>true</import>
     <headerPattern>/(member(ship)?.)?start(s)?(.date$)?/i</headerPattern>
     <dataPattern>/\d{4}-?\d{2}-?\d{2}/</dataPattern>
@@ -70,6 +87,7 @@
     <uniqueName>membership_end_date</uniqueName>
     <title>Membership Expiration Date</title>
     <type>date</type>
+    <required>true</required>
     <import>true</import>
     <headerPattern>/(member(ship)?.)?end(s)?(.date$)?/i</headerPattern>
     <dataPattern>/\d{4}-?\d{2}-?\d{2}/</dataPattern>

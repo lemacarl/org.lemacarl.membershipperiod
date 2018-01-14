@@ -6,6 +6,9 @@
 class CRM_Membershipperiod_Form {
 
 	public function showMembershipPeriod( &$form ) {
+		$id = CRM_Utils_Request::retrieve( 'id', 'Positive', $form );
+		$periods = CRM_Core_DAO::executeQuery( "SELECT * FROM civicrm_membershipperiod WHERE membership_id = {$id}" );
+
 		$form->addClass( 'membership-period' );
 
 		// Define template path

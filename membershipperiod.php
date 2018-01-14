@@ -131,7 +131,7 @@ function membershipperiod_civicrm_post( $op, $objectName, $objectId, &$objectRef
   if( 'Membership' == $objectName && ( 'create' == $op || 'edit' == $op ) ) {
     $core = new CRM_Membershipperiod_Core();
     CRM_Core_Transaction::addCallback( CRM_Core_Transaction::PHASE_POST_COMMIT,
-      array( $core, 'insertMembershipPeriod' ), array( $objectRef ) );
+      array( $core, 'insertMembershipPeriod' ), array( $op, $objectRef ) );
   }
 }
 
