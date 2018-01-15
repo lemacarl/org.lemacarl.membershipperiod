@@ -92,8 +92,7 @@ class CRM_Membershipperiod_Core {
 	 * @return int|bool
 	 */
 	private function getContributionID( $object ) {
-		$source = $object->source;
-		$result = CRM_Core_DAO::executeQuery( "SELECT id FROM civicrm_contribution WHERE contact_id = {$object->contact_id} AND source = '{$source}' " );
+		$result = CRM_Core_DAO::executeQuery( "SELECT id FROM civicrm_contribution WHERE contact_id = {$object->contact_id} AND financial_type_id = 2" );
 		if( $result->N > 0 ){
 			// Return the most recent 
 			$result->fetch();
