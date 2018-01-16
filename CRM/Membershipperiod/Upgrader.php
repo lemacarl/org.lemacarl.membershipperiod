@@ -11,9 +11,9 @@ class CRM_Membershipperiod_Upgrader extends CRM_Membershipperiod_Upgrader_Base {
 
   /**
    * Example: Run an external SQL script when the module is installed.
-   *
+   */
   public function install() {
-    $this->executeSqlFile('sql/myinstall.sql');
+    $this->executeSqlFile('sql/auto_install.sql');
   }
 
   /**
@@ -36,9 +36,9 @@ class CRM_Membershipperiod_Upgrader extends CRM_Membershipperiod_Upgrader_Base {
 
   /**
    * Example: Run an external SQL script when the module is uninstalled.
-   *
+   */
   public function uninstall() {
-   $this->executeSqlFile('sql/myuninstall.sql');
+   $this->executeSqlFile('sql/auto_uninstall.sql');
   }
 
   /**

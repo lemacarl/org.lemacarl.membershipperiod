@@ -11,9 +11,7 @@ use Civi\Test\HeadlessInterface;
  */
 class CRM_MembershipPeriod_CoreTest extends \CiviUnitTestCase implements HeadlessInterface {
 
-  private $membership_type;
-
-  private $contact;
+  private $membership;
 
   public function setUpHeadless() {
   }
@@ -28,47 +26,59 @@ class CRM_MembershipPeriod_CoreTest extends \CiviUnitTestCase implements Headles
     parent::tearDown();
   }
 
-  public function testInsertMembershipPeriod () {
-    // Assert that table is empty
-    $this->assertDBQuery( 0, 'SELECT count(*) FROM civicrm_membershipperiod' );
-    // Assert that membership type exists
-    $this->assertDBQuery( 1, "SELECT count(*) FROM civicrm_membership_type WHERE id = {$this->membership_type['id']}" );
-    // Assert that contact exists
-    $this->assertDBQuery( 1, "SELECT count(*) FROM civicrm_contact WHERE id = {$this->contact['id']}" );
+  public function testInsertMembershipPeriod() {
+    $m = $this->membership;
 
-    // Create new membership 
-    $result = civicrm_api3( 'Membership', 'create', array(
-      'membership_type_id'  => $this->membership_type['id'],
-      'contact_id'          => $this->contact['id'],
-      'status_id'           => 1,
-    ) );
+    // Mock object
+    $object = Mockery::spy();
 
-    // Assert that corresponding membership record is inserted
-    $this->assertDBQuery( 1, 'SELECT count(*) FROM civicrm_membershipperiod' );
-    $this->assertDBQuery( 1, "SELECT count(*) FROM civicrm_membershipperiod WHERE membership_id = {$result['id']}" );
+    // Populate object
+    $object->id = $m['id'];
+    $object->contact_id = $m['values'][ $m['id'] ]['contact_id'];
+    $object->start_date = $m['values'][ $m['id'] ]['start_date'];
+    $object->end_date = $m['values'][ $m['id'] ]['end_date'];
+
+    $core = new CRM_Membershipperiod_Core();
+    $core->insertMembershipPeriod( 'create', $object );
+
+    $this->assertDBQuery( 1, "SELECT count(*) FROM civicrm_membershipperiod WHERE membership_id = {$m['id']}" );
+
+    // Edit object
+    $object->start_date = '20180101';
+    $core->insertMembershipPeriod( 'edit', $object );
+
+    $this->assertDBQuery( '2018-01-01', "SELECT start_date FROM civicrm_membershipperiod WHERE membership_id = {$m['id']}" );
 
   }
 
   public function setUpTestData() {
-    // Create test DB entries
-    $this->contact = civicrm_api3( 'Contact', 'create', array(
+    // Create contact
+    $contact = civicrm_api3( 'Contact', 'create', array(
       'first_name'    => 'John',
       'last_name'     => 'Doe',
       'contact_type'  => 'Individual'
     ) );
+
+    // Create organization
     $organization = civicrm_api3( 'Contact', 'create', array(
       'organization_name' => 'test organization',
       'contact_type'      => 'Organization'
     ) );
+
+    // Create domain
     $domain = civicrm_api3( 'Domain', 'create', array(
       'name'            => 'test domain',
       'domain_version'  => 'test version'
     ) );
+
+    // Create financial type
     $financial_type = civicrm_api3( 'FinancialType', 'create', array(
      'name'       => 'test financial type',
      'is_active'  => 1
     ) );
-    $this->membership_type = civicrm_api3( 'MembershipType', 'create', array(
+
+    // Create membership type
+    $membership_type = civicrm_api3( 'MembershipType', 'create', array(
       'name'                  => 'test membership type',
       'domain_id'             => $domain['id'],
       'financial_type_id'     => $financial_type['id'],
@@ -76,6 +86,13 @@ class CRM_MembershipPeriod_CoreTest extends \CiviUnitTestCase implements Headles
       'duration_unit'         => 'month',
       'duration_interval'     => 12,
       'period_type'           => 'rolling',
+    ) );
+    
+    // Create new membership 
+    $this->membership = civicrm_api3( 'Membership', 'create', array(
+      'membership_type_id'  => $membership_type['id'],
+      'contact_id'          => $contact['id'],
+      'status_id'           => 1,
     ) );
   }
 }

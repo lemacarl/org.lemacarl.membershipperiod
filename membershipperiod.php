@@ -125,8 +125,8 @@ function membershipperiod_civicrm_alterSettingsFolders(&$metaDataFolders = NULL)
 
 
 /**
-* Implements hook_civicrm_post()
-*/
+ * Implements hook_civicrm_post()
+ */
 function membershipperiod_civicrm_post( $op, $objectName, $objectId, &$objectRef ) {
   if( 'Membership' == $objectName && ( 'create' == $op || 'edit' == $op ) ) {
     $core = new CRM_Membershipperiod_Core();
@@ -136,8 +136,8 @@ function membershipperiod_civicrm_post( $op, $objectName, $objectId, &$objectRef
 }
 
 /**
-* Implements hook_civicrm_buildForm
-*/
+ * Implements hook_civicrm_buildForm
+ */
 function membershipperiod_civicrm_buildForm( $form_name, &$form ) {
   if( 'CRM_Member_Form_MembershipView' == $form_name ) {
     $mp_form = new CRM_Membershipperiod_Form();

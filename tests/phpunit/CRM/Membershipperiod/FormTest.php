@@ -22,14 +22,18 @@ class CRM_MembershipPeriod_FormTest extends \CiviUnitTestCase implements Headles
     parent::tearDown();
   }
 
+  /**
+  * Do basic test to ensure it runs with no errors
+  **/
   public function testShowMembershipPeriod() {
     // Mock our dependencies
-    $form = new CRM_Core_Form();
+    $form = Mockery::mock( 'CRM_Member_Form_MembershipView' )->shouldIgnoreMissing();
+    $form->shouldReceive( 'get' )->once()->andReturn( 1 );
 
     // Simulate hook by calling method directly 
     $membership_form = new CRM_Membershipperiod_Form();
     $membership_form->showMembershipPeriod( $form );
 
-    $this->assertTrue( true );
+    $this->assertTrue( is_object( $form ) );
   }
 }

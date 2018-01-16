@@ -6,10 +6,9 @@ A CMS independent CiviCRM extension that shows membership periods/terms for a gi
 
 ### Prerequisites
 
-
 ```
 Drupal 7
-CiviCRM 4.7.x
+CiviCRM 
 ```
 
 ### Installing
@@ -24,6 +23,12 @@ git clone https://github.com/lemacarl/org.lemacarl.membershipperiod.git
 For more information on how to install CiviCRM extensions (https://docs.civicrm.org/sysadmin/en/latest/customize/extensions)
 
 ## Running the tests
+
+Install dependencies
+
+```
+composer install
+```
 
 Run the unit tests
 
