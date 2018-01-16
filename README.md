@@ -4,6 +4,8 @@ A CMS independent CiviCRM extension that shows membership periods/terms for a gi
 
 ## Getting Started
 
+To set up CiviCRM (https://docs.civicrm.org/sysadmin/en/latest)
+
 ### Prerequisites
 
 ```
